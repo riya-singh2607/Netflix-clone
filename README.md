@@ -1,5 +1,5 @@
 # Netflix-clone
-This is the core code from scratch to clone the landing page of Netflix using HTML, CSS and JavaScript.
+This is the core code from scratch to clone the landing page of Netflix using HTML, CSS and JavaScript with the help of AI Editor i.e WindSurf this whole responsive website is built on AI editor.
 ![Screenshot (154)](https://github.com/user-attachments/assets/c1ec3b1b-415b-4fe5-933a-279a3215893f)
 ![Screenshot (153)](https://github.com/user-attachments/assets/64154483-5b34-40a0-8aca-7fe5b0eb19af)
 ![Screenshot (152)](https://github.com/user-attachments/assets/7d1f866e-844c-4e36-ac92-da12bf98e5de)
