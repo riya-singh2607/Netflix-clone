@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Sign Up</title>
+    <link rel="stylesheet" href="src/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .signup-container {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('https://assets.nflxext.com/ffe/siteui/vlv3/9134db96-10d6-4a64-a619-a21da22f8999/a449fabb-05e4-4c8a-b062-b0bec7d03085/IN-en-20240115-trifectadaily-perspective_alpha_website_large.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .signup-form {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .form-title {
+            color: white;
+            font-size: 32px;
+            font-weight: 500;
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background: #333;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            background: #454545;
+            border-color: #e50914;
+        }
+
+        .form-input.error {
+            border-color: #e50914;
+        }
+
+        .password-input {
+            padding-right: 40px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #8c8c8c;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .password-toggle:hover {
+            color: white;
+        }
+
+        .error-message {
+            color: #e50914;
+            font-size: 13px;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background: #e50914;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #f40612;
+        }
+
+        .btn-social {
+            color: white;
+        }
+
+        .btn-google {
+            background: transparent;
+        }
+
+        .btn-facebook {
+            background: transparent;
+        }
+
+        .btn-twitter {
+            background: transparent;
+        }
+
+        .btn-social:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+            color: #737373;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #737373;
+        }
+
+        .divider span {
+            padding: 0 10px;
+        }
+
+        .signin-link {
+            color: #737373;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .signin-link a {
+            color: white;
+            text-decoration: none;
+            margin-left: 5px;
+        }
+
+        .signin-link a:hover {
+            text-decoration: underline;
+        }
+
+        .loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .spin {
+            animation: spin 1s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <form class="signup-form" id="signupForm">
+            <h1 class="form-title">Sign Up</h1>
+            
+            <div class="form-group">
+                <input type="text" class="form-input" id="username" placeholder="Username" required>
+                <div class="error-message" id="usernameError">Username is required</div>
+            </div>
+
+            <div class="form-group">
+                <input type="password" class="form-input password-input" id="password" placeholder="Password" required>
+                <button type="button" class="password-toggle" id="passwordToggle">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <div class="error-message" id="passwordError">Password must be at least 6 characters</div>
+            </div>
+
+            <div class="form-group">
+                <input type="password" class="form-input password-input" id="confirmPassword" placeholder="Confirm Password" required>
+                <button type="button" class="password-toggle" id="confirmPasswordToggle">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="signupButton">
+                <span>Sign Up</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <div class="divider">
+                <span>or continue with</span>
+            </div>
+
+            <button type="button" class="btn btn-social btn-google" onclick="handleSocialLogin('Google')">
+                <i class="fab fa-google"></i>
+                Google
+            </button>
+
+            <button type="button" class="btn btn-social btn-facebook" onclick="handleSocialLogin('Facebook')">
+                <i class="fab fa-facebook-f"></i>
+                Facebook
+            </button>
+
+            <button type="button" class="btn btn-social btn-twitter" onclick="handleSocialLogin('Twitter')">
+                <i class="fab fa-twitter"></i>
+                Twitter
+            </button>
+
+            <p class="signin-link">
+                Already have an account?
+                <a href="signin.html">Sign In</a>
+            </p>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('signupForm');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const passwordToggle = document.getElementById('passwordToggle');
+            const confirmPasswordToggle = document.getElementById('confirmPasswordToggle');
+            const signupButton = document.getElementById('signupButton');
+
+            // Toggle password visibility
+            function togglePasswordVisibility(input, button) {
+                const type = input.type === 'password' ? 'text' : 'password';
+                input.type = type;
+                button.innerHTML = `<i class="fas fa-${type === 'password' ? 'eye' : 'eye-slash'}"></i>`;
+            }
+
+            passwordToggle.addEventListener('click', () => 
+                togglePasswordVisibility(passwordInput, passwordToggle));
+            
+            confirmPasswordToggle.addEventListener('click', () => 
+                togglePasswordVisibility(confirmPasswordInput, confirmPasswordToggle));
+
+            // Form validation
+            function showError(input, message) {
+                const errorElement = document.getElementById(`${input.id}Error`);
+                input.classList.add('error');
+                errorElement.style.display = 'block';
+                errorElement.textContent = message;
+            }
+
+            function hideError(input) {
+                const errorElement = document.getElementById(`${input.id}Error`);
+                input.classList.remove('error');
+                errorElement.style.display = 'none';
+            }
+
+            function validateForm() {
+                let isValid = true;
+                const username = document.getElementById('username');
+
+                if (!username.value.trim()) {
+                    showError(username, 'Username is required');
+                    isValid = false;
+                }
+
+                if (passwordInput.value.length < 6) {
+                    showError(passwordInput, 'Password must be at least 6 characters');
+                    isValid = false;
+                }
+
+                if (passwordInput.value !== confirmPasswordInput.value) {
+                    showError(confirmPasswordInput, 'Passwords do not match');
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            // Handle form submission
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!validateForm()) return;
+
+                signupButton.disabled = true;
+                signupButton.classList.add('loading');
+                signupButton.innerHTML = '<i class="fas fa-spinner spin"></i> Signing up...';
+
+                try {
+                    // Simulate API call
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    
+                    signupButton.innerHTML = '<i class="fas fa-check"></i> Success!';
+                    setTimeout(() => {
+                        window.location.href = 'browse.html';
+                    }, 1000);
+                } catch (error) {
+                    signupButton.innerHTML = '<i class="fas fa-times"></i> Error';
+                    setTimeout(() => {
+                        signupButton.disabled = false;
+                        signupButton.classList.remove('loading');
+                        signupButton.innerHTML = '<span>Sign Up</span><i class="fas fa-arrow-right"></i>';
+                    }, 2000);
+                }
+            });
+
+            // Clear errors on input
+            const inputs = form.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                input.addEventListener('input', () => hideError(input));
+            });
+        });
+
+        // Handle social login
+        async function handleSocialLogin(platform) {
+            const button = document.querySelector(`.btn-${platform.toLowerCase()}`);
+            const originalContent = button.innerHTML;
+            
+            button.disabled = true;
+            button.classList.add('loading');
+            button.innerHTML = `<i class="fas fa-spinner spin"></i> Connecting...`;
+
+            try {
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                button.innerHTML = `<i class="fas fa-check"></i> Connected!`;
+                setTimeout(() => {
+                    window.location.href = 'browse.html';
+                }, 1000);
+            } catch (error) {
+                button.innerHTML = `<i class="fas fa-times"></i> Failed`;
+                setTimeout(() => {
+                    button.disabled = false;
+                    button.classList.remove('loading');
+                    button.innerHTML = originalContent;
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>
